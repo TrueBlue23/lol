@@ -120,7 +120,7 @@ makeToggle("Activate Script", 170, function(state)
     if state then
         local success, response = pcall(function()
             -- Insert your GitHub raw link below!
-            return game:HttpGet("https://raw.githubusercontent.com/TrueBlue23/Bloxfruits/refs/heads/main/DarkHub.lua")
+            return game:HttpGet("https://raw.githubusercontent.com/TrueBlue23/Bloxfruits/refs/heads/main/DarkHub")
         end)
         if success then
             local func, loadErr = loadstring(response)
