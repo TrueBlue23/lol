@@ -1,88 +1,141 @@
+-- Services
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
+
+-- Main GUI setup
 local gui = Instance.new("ScreenGui")
 gui.ResetOnSpawn = false
 gui.Name = "CoolUI"
 gui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+
 local main = Instance.new("Frame")
-main.Size = UDim2.new(0, 200, 0, 160)
-main.Position = UDim2.new(0.5, -100, 0.5, -80)
-main.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+main.Size = UDim2.new(0, 220, 0, 220) -- Increased size for premium message
+main.Position = UDim2.new(0.5, -110, 0.5, -110)
+main.BackgroundColor3 = Color3.fromRGB(20, 60, 180) -- Blue theme
 main.BorderSizePixel = 0
 main.Parent = gui
-Instance.new("UICorner", main).CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", main).CornerRadius = UDim.new(0, 14)
+
 local bg = Instance.new("UIGradient")
 bg.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 45)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(30, 30, 35))
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 110, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 60, 180))
 })
 bg.Parent = main
+
 local shadow = Instance.new("ImageLabel")
-shadow.Size = UDim2.new(1, 30, 1, 30)
-shadow.Position = UDim2.new(0, -15, 0, -15)
+shadow.Size = UDim2.new(1, 34, 1, 34)
+shadow.Position = UDim2.new(0, -17, 0, -17)
 shadow.BackgroundTransparency = 1
 shadow.Image = "rbxassetid://297774371"
-shadow.ImageColor3 = Color3.fromRGB(15, 15, 20)
-shadow.ImageTransparency = 0.6
+shadow.ImageColor3 = Color3.fromRGB(10, 30, 60)
+shadow.ImageTransparency = 0.4
 shadow.Parent = main
+
+-- Premium Message
+local premium = Instance.new("TextLabel")
+premium.Size = UDim2.new(1, 0, 0, 20)
+premium.Position = UDim2.new(0, 0, 0, 0)
+premium.BackgroundTransparency = 1
+premium.Text = "★ Premium ★"
+premium.TextColor3 = Color3.fromRGB(255, 215, 0)
+premium.TextSize = 18
+premium.Font = Enum.Font.Cartoon -- Closest to Comic Sans
+premium.TextStrokeTransparency = 0.7
+premium.Parent = main
+
+-- Title
 local label = Instance.new("TextLabel")
-label.Size = UDim2.new(1, 0, 0, 30)
+label.Size = UDim2.new(1, 0, 0, 32)
+label.Position = UDim2.new(0, 0, 0, 20)
 label.BackgroundTransparency = 1
 label.Text = "BluesHub Trade Freeze"
 label.TextColor3 = Color3.fromRGB(255, 255, 255)
-label.TextSize = 16
-label.Font = Enum.Font.GothamBold
+label.TextSize = 19
+label.Font = Enum.Font.Cartoon
 label.Parent = main
-local function makeToggle(text, yPos)
+
+-- Toggle creation function
+local function makeToggle(text, yPos, callback)
     local base = Instance.new("Frame")
-    base.Size = UDim2.new(0.9, 0, 0, 30)
+    base.Size = UDim2.new(0.9, 0, 0, 32)
     base.Position = UDim2.new(0.5, 0, 0, yPos)
-    base.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    base.BackgroundColor3 = Color3.fromRGB(30, 90, 210)
     base.BorderSizePixel = 0
     base.AnchorPoint = Vector2.new(0.5, 0)
     base.Parent = main
-    Instance.new("UICorner", base).CornerRadius = UDim.new(0, 6)
+    Instance.new("UICorner", base).CornerRadius = UDim.new(0, 8)
+
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0, 40, 0, 20)
-    btn.Position = UDim2.new(1, -45, 0.5, -10)
-    btn.BackgroundColor3 = Color3.fromRGB(60, 60, 65)
+    btn.Size = UDim2.new(0, 44, 0, 22)
+    btn.Position = UDim2.new(1, -50, 0.5, -11)
+    btn.BackgroundColor3 = Color3.fromRGB(60, 130, 255)
     btn.BorderSizePixel = 0
     btn.Text = ""
     btn.Parent = base
     Instance.new("UICorner", btn).CornerRadius = UDim.new(1, 0)
+
     local dot = Instance.new("Frame")
-    dot.Size = UDim2.new(0, 16, 0, 16)
-    dot.Position = UDim2.new(0, 2, 0.5, -8)
+    dot.Size = UDim2.new(0, 18, 0, 18)
+    dot.Position = UDim2.new(0, 2, 0.5, -9)
     dot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     dot.BorderSizePixel = 0
     dot.Parent = btn
     Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
+
     local txt = Instance.new("TextLabel")
-    txt.Size = UDim2.new(1, -55, 1, 0)
+    txt.Size = UDim2.new(1, -60, 1, 0)
     txt.Position = UDim2.new(0, 10, 0, 0)
     txt.BackgroundTransparency = 1
     txt.Text = text
     txt.TextColor3 = Color3.fromRGB(255, 255, 255)
-    txt.TextSize = 14
-    txt.Font = Enum.Font.Gotham
+    txt.TextSize = 16
+    txt.Font = Enum.Font.Cartoon
     txt.TextXAlignment = Enum.TextXAlignment.Left
     txt.Parent = base
+
     local on = false
     btn.MouseButton1Click:Connect(function()
         on = not on
         local goals = {
-            [btn] = {BackgroundColor3 = on and Color3.fromRGB(0, 170, 255) or Color3.fromRGB(60, 60, 65)},
-            [dot] = {Position = on and UDim2.new(1, -18, 0.5, -8) or UDim2.new(0, 2, 0.5, -8)}
+            [btn] = {BackgroundColor3 = on and Color3.fromRGB(0, 170, 255) or Color3.fromRGB(60, 130, 255)},
+            [dot] = {Position = on and UDim2.new(1, -20, 0.5, -9) or UDim2.new(0, 2, 0.5, -9)}
         }
         for obj, goal in pairs(goals) do
-            TS:Create(obj, TweenInfo.new(0.2), goal):Play()
+            TS:Create(obj, TweenInfo.new(0.22), goal):Play()
+        end
+        if callback then
+            callback(on)
         end
     end)
 end
-makeToggle("Freeze Trade", 40)
-makeToggle("Auto Accept", 80)
-makeToggle("Auto Add Items", 120)
+
+makeToggle("Freeze Trade", 56)
+makeToggle("Auto Accept", 94)
+makeToggle("Auto Add Items", 132)
+
+-- Activate Script toggle: executes the script from another repository when toggled ON
+makeToggle("Activate Script", 170, function(state)
+    if state then
+        local success, response = pcall(function()
+            -- Insert your GitHub raw link below!
+            return game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/YOUR_SCRIPT.lua")
+        end)
+        if success then
+            local func, loadErr = loadstring(response)
+            if func then
+                func()
+            else
+                warn("Failed to load script: " .. tostring(loadErr))
+            end
+        else
+            warn("HTTP request failed: " .. tostring(response))
+        end
+    end
+end)
+
+-- Dragging functionality
 local drag = {
     enabled = false,
     start = nil,
@@ -93,7 +146,7 @@ main.InputBegan:Connect(function(input)
         drag.enabled = true
         drag.start = input.Position
         drag.startPos = main.Position
-        
+
         input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 drag.enabled = false
